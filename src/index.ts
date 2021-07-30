@@ -1,5 +1,6 @@
 import app from "./server";
 import { config } from "dotenv";
+import AuctionsDAO from "./data-access-object/AuctionsDAO";
 //load envrioment variables
 config();
 
@@ -17,6 +18,7 @@ client.connect(async (err: MongoError) => {
     process.exit(1);
   }
   //start the server
+  await AuctionsDAO.connectDB(client);
   const port = process.env.PORT || 3333;
   app.listen(port, () =>
     console.log(`API available on http://localhost:${port}`)
